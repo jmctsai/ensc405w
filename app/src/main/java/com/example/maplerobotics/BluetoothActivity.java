@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +18,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String TAG = "BluetoothActivity";
 
     BluetoothAdapter mBTAdapter;
+    BluetoothSocket mBTSocket;
+    //SPP UUID. Look for it
+    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
     public DeviceListAdapter mDeviceListAdapter;
@@ -217,9 +223,23 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
 
         // Create bond
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Log.d(TAG, "Trying to pair with " + deviceName);
-            mBTDevices.get(position).createBond();
+//        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+//            Log.d(TAG, "Trying to pair with " + deviceName);
+//            mBTDevices.get(position).createBond();
+//        }
+
+        try
+        {
+            if (mBTSocket == null){
+                BluetoothDevice device = mBTAdapter.getRemoteDevice(deviceAddress);
+                mBTSocket = device.createInsecureRfcommSocketToServiceRecord(myUUID);
+                mBTAdapter.cancelDiscovery();
+                mBTSocket.connect();
+            }
+        }
+        catch (IOException e)
+        {
+            Log.d(TAG, e.getMessage());
         }
     }
 }
