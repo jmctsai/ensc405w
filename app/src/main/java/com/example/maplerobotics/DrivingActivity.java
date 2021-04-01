@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.io.IOException;
 
 public class DrivingActivity extends AppCompatActivity {
+    private static final String TAG = "DrivingActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

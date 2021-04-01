@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity{
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity{
 
         Button manualDrivingBtn = findViewById(R.id.manualDrivingBtn);
         Button bluetoothBtn = findViewById(R.id.bluetoothBtn);
+        Switch sweeperSwitch = findViewById(R.id.sweeperSwitch);
 
         manualDrivingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +35,19 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BluetoothActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        sweeperSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.d(TAG, "sweeperSwitch: Toggle is ON");
+                    // TODO: send Sweeper ON command to Arduino
+                } else {
+                    Log.d(TAG, "sweeperSwitch: Toggle is OFF");
+                    // TODO: send Sweeper OFF command to Arduino
+                }
             }
         });
     }
