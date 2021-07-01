@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">MapleRoboticsApp</string>
+    <string name="app_name">MapleRobotics</string>
 
+    <string name="select">Select Paired Device</string>
     <string name="refresh">Refresh</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>

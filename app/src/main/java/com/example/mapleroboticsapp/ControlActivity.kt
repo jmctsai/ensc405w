@@ -36,7 +36,7 @@ class ControlActivity: AppCompatActivity() {
         control_left.setOnClickListener { sendCommand("c") }
         control_right.setOnClickListener { sendCommand("d") }
         control_program_start.setOnClickListener{sendCommand("e")}
-        control_program_start.setOnClickListener{sendCommand("f")}
+        control_program_stop.setOnClickListener{sendCommand("f")}
         control_disconnect.setOnClickListener { disconnect() }
     }
 
